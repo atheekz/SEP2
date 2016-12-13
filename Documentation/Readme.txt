@@ -1,0 +1,1 @@
+Documentation regarding the project are to be saved in this folder. Please log the adding and updating of documents in the text file
