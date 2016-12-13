@@ -1,1 +1,0 @@
-Mobile app is in this folder. commit any changes clearly. DO NOT EDIT THE .unity3d file without informing and getting permission from others as it might cause conflicts
