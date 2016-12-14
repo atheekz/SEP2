@@ -1,0 +1,826 @@
+
+ <div ng-controller="homeCtrl"   ng-init="showPromptCity($event)">
+  <div >
+ <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html#!/" style="color:#ffffff"><md-icon                    style="width:2.500em;height:1.5000em;" aria-label="Cart" ><img class="png-icon" src="./logo_animated.png"  style="width:2.500em;height:1.5000em;" ></md-icon>     SLIIT CLASSROOM</a>
+            </div>
+            <!-- Top Menu Items -->
+
+            <ul  ng-if="userLogedIn == true" class="nav navbar-right top-nav">
+           
+
+                <li class="dropdown">
+                    <a href="#!/" class="dropdown-toggle" data-toggle="dropdown">
+<span ng-if="messages_question_count>0">
+<span class="fa-stack fa has-badge" data-count={{messages_question_count}}>
+ 
+  <i class="fa fa-bell fa fa-envelope"></i>
+</span>
+</span>
+<span ng-if="messages_question_count==0">
+<span class="fa-stack " >
+ 
+  <i class="fa fa-bell fa fa-envelope"></i>
+</span>
+</span>
+                    <!-- <i class="fa fa-envelope"></i> <b class="caret"> --></b></a>
+                    <ul class="dropdown-menu message-dropdown">
+                       <!--  <li class="message-preview">
+                            <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-shopping-cart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">124</div>
+                                        <div>New Products!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                        </li> -->
+                        <li class="message-preview" ng-repeat="x in messages_question">
+                            <a ng-click="show_stuent_messages(x)">
+                                <div class="media">
+                                    <span class="pull-left">
+                                        <img class="media-object" src="./student.png" alt="">
+                                    </span>
+                                    <div class="media-body">
+                                    <div ng-if="userDetails.name = undifined"></div>
+                                        <h5 class="media-heading"><strong>{{x.username}}</strong>
+                                        </h5>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i>    {{date | date:'HH:mm:ss'}}</p>
+                                        <p>{{x.question}}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                  
+                        <li class="message-footer">
+                            <a href="#!/">Read All Messages</a>
+                        </li>
+                    </ul>
+                </li>
+            <!--     <li class="dropdown">
+                    <a href="#!/" class="dropdown-toggle " data-toggle="dropdown"><i class="fa fa-bell "></i> <b class="caret"></b></a>
+                    <ul class="dropdown-menu alert-dropdown">
+                        <li>
+                            <a href="#!/">Alert Name <span class="label label-default">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#!/home">Alert Name <span class="label label-primary">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
+                        </li>
+                        <li>
+                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">View All</a>
+                        </li>
+                    </ul>
+                </li> -->
+                <li class="dropdown">
+                    <a  class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-user"></i> {{user.name}}<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-gear"></i> Setting </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a ng-click="logout()"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+                
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse" >
+                <ul class="nav navbar-nav side-nav">
+                    <li class="active">
+                        <a href="">  <i class="fa fa-list-alt" ></i> LIST OF COURSES</a>
+                    </li>
+                   <!-- <li>
+                        <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
+                    </li>
+                    <li>
+                        <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
+                    </li>
+                    <li>
+                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
+                    </li>
+                    <li>
+                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
+                    </li>
+                    <li>
+                        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo" class="collapse">
+                            <li>
+                                <a href="#!/home">Dropdown Item</a>
+                            </li>
+                            <li>
+                                <a href="#">Dropdown Item</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+                    </li>
+                    <li>
+                        <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
+                    </li>  
+ ng-true-value="'yup'" ng-false-value="'nope'"
+                    -->
+                    <!--repeat       <!--one repeat {{ item.productName }}ng-repeat="item in userList" -->      
+                     <li ng-repeat="(key,value) in userList | groupBy: 'productCatergory'">
+                    <a href="javascript:;" data-toggle="collapse" ng-click="filterSearch(key)" data-target="#demo{{$index}}">   
+ <md-checkbox class="green" ng-click="filterSearch(key)" ng-model="userListCatergoryChecked.selected[key]" ng-checked="false" style="margin-bottom: 1px;" ></md-checkbox>
+ 
+                         {{key}}<i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo{{$index}}" class="collapse">
+                            <li ng-repeat="item in value">
+                                <div ng-init="check(item.statusAddedToCart,[key]);"></div>
+                                <a href="#!/" ng-click="filterSearch(item.productName)"  context-menu="otherMenuOptions">{{item.productName}} <span ng-if="item.statusAddedToCart== 'true'" style="    color: green;">   <i class="fa fa-check" aria-hidden="true"></i></span></a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    <!--repeat-->
+                    
+<!--should remove-
+  <div ui-tree>
+  <ol ui-tree-nodes="" ng-model="list">
+    <li ng-repeat="(key,value) in userList | groupBy: 'productCatergory'" ui-tree-node>
+      <div ui-tree-handle>
+        {{key}}
+      </div>
+      <ol ui-tree-nodes="" ng-model="item.items">
+        <li ng-repeat="item in value" ui-tree-node>
+          <div ui-tree-handle>
+           {{item.productName}} 
+          </div>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</div>
+<!--should remove-->
+                 <!--     <li>
+
+                    <a href="javascript:;" data-toggle="collapse" data-target="#demo2">
+                    <md-checkbox class="green" ng-model="data.cb" style="margin-bottom: 1px;"></md-checkbox>
+Rice <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="demo2" class="collapse">
+                            <li>
+                                <a href="#!/home">Dropdown Item</a>
+                            </li>
+                            <li>
+                                <a href="#">Dropdown Item</a>
+                            </li>
+                        </ul>
+                    </li> -->
+                </ul>
+
+ 
+
+                                    <ul  ng-if="userLogedIn != true" class="nav navbar-right top-nav">
+           
+<li><md-button class="md-raised" ng-click="goToLogin()"><i class="fa fa-sign-in" aria-hidden="true"></i> LOGIN</md-button></li>
+<li><md-button class="md-raised" ng-click="goToRegister()"><i class="fa fa-user" aria-hidden="true"></i> SIGN-UP</md-button></li>
+                                                           
+                                                            
+                                                        </ul>
+
+                                                  
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+
+<!--<div ng-include src="'./navbar/navbar.html'"></div>
+         Navigation -->
+       
+        <div id="page-wrapper" style="min-width:100%;">
+
+
+            <div class="container-fluid" style= "margin-right:1px;">
+
+                <!-- Page Heading -->
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <h1 class="page-header">  SLIIT CLASSROOM
+                        </h1>
+                  
+                    
+                        <ol class="breadcrumb" >
+                            <li class="active" style="width:100%;height: 1.875em;">
+                                <md-input-container class="md-block" style="margin: 11px 0;"> <label style="color:white;font-size:large;font-weight: 100;" ><i class="fa fa-search" aria-hidden="true" style="color:white;"></i> Search</label> <input type="text" ng-model="search" style="color:white;font-size:large;" /> </md-input-container>
+                            </li>
+                         
+
+                        </ol>
+
+                    
+                          <md-icon  style="width: 12.500em; height: 10.000em; /* float: left; */ position: absolute; top: 32px; left: 2px;" aria-label="Cart"    >
+                              <img class="png-icon" style="width: 12.500em; height: 10.000em;position: absolute; top: 12px; left: 2px;" src="./logo_animated.png" >
+                          </md-icon>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+<!--                 <div class="row" >
+                    <div class="col-lg-12"   style="float:left;">
+                        <div class="alert alert-info alert-dismissable"  style="width:100%;float:left;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>Like SB Admin?</strong> Try out <a href="http://startbootstrap.com/template-overviews/sb-admin-2" class="alert-link">SB Admin 2</a> for additional features!
+                        </div>
+                    </div>
+                </div>
+                         -->
+
+                         
+                <br/><br/> 
+
+               
+                <!-- /.row -->
+
+               
+                    <!--  <div class="row"> <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-comments fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">26</div>
+                                        <div>New Comments!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div> -->
+                   <!--  <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-tasks fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">12</div>
+                                        <div>New Tasks!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div> -->
+             <!--        <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-shopping-cart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">124</div>
+                                        <div>New Orders!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div> -->
+                 <!--    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-support fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">13</div>
+                                        <div>Support Tickets!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>  </div>-->
+               
+                <!-- /.row -->
+
+            <!--     <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Area Chart</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="morris-area-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <!--dekete /.row -->
+
+       <!--one repeat--> 
+<!-- _quiz -->
+    <div ng-show="_quiz_show">
+    <div ng-repeat="questions in selected_questions2 track by $index">
+    <h3>Qustion  </h3>
+  <form name="userForm_Announcements"  ><!-- ng-init="quizw('quiz_qustion_'+$index )" -->
+   
+<div id="{{ 'quiz_qustion_'+$index }}"  style="height:250px"  ng-model="questions.qustion" >
+<!-- 
+  <p>Hello World!</p>
+  <p>Some initial <strong>bold</strong> text</p>
+  <p><br></p> -->
+</div>
+  <md-input-container class="md-block">
+        <label>Answer 1</label>
+        <input  id="answer_1"  md-maxlength="50" maxlength="50" minlength="5" required md-no-asterisk name="description" ng-model="questions.answer_1">
+        <div ng-messages="userForm_Announcements.description.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The description must be less than 50 characters long.</div>
+             <div ng-message-exp="['minlength']">
+          Description must be at least 5 characters long</div>
+          <div ng-message-exp="['maxlength']">
+          The description must be less than 50 characters long.</div>
+        </div>
+      </md-input-container>
+        <md-input-container class="md-block">
+        <label>Answer 2</label>
+        <input  id="answer_2"  md-maxlength="50" maxlength="50" minlength="5" required md-no-asterisk name="description" ng-model="questions.answer_2">
+        <div ng-messages="userForm_Announcements.description.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The description must be less than 50 characters long.</div>
+             <div ng-message-exp="['minlength']">
+          Description must be at least 5 characters long</div>
+          <div ng-message-exp="['maxlength']">
+          The description must be less than 50 characters long.</div>
+        </div>
+      </md-input-container>
+        <md-input-container class="md-block">
+        <label>Answer 3</label>
+        <input  id="answer_3"  md-maxlength="50" maxlength="50" minlength="5" required md-no-asterisk name="description" ng-model="questions.answer_3">
+        <div ng-messages="userForm_Announcements.description.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The description must be less than 50 characters long.</div>
+             <div ng-message-exp="['minlength']">
+          Description must be at least 5 characters long</div>
+          <div ng-message-exp="['maxlength']">
+          The description must be less than 50 characters long.</div>
+        </div>
+      </md-input-container>
+        <md-input-container class="md-block">
+        <label>Answer 4</label>
+        <input id="answer_4" md-maxlength="50" maxlength="50" minlength="5" required md-no-asterisk name="description" ng-model="questions.answer_4">
+        <div ng-messages="userForm_Announcements.description.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The description must be less than 50 characters long.</div>
+             <div ng-message-exp="['minlength']">
+          Description must be at least 5 characters long</div>
+          <div ng-message-exp="['maxlength']">
+          The description must be less than 50 characters long.</div>
+        </div>
+      </md-input-container>
+          <div ng-show ="checkBodyquiz" class="alert alert-danger"> body cannot be blank.</div>
+
+          <!--checkbox-->
+           <h2 class="md-title">Select Correct Answers </h2>
+           <div flex="50" ng-repeat="item in items_checkbox">
+              <md-checkbox ng-checked="exists_checkbox(item, selected_checkbox)" ng-click="toggle_checkbox(item, selected_checkbox)">
+                {{ item }} <span ng-if="exists_checkbox(item, selected_checkbox)">selected</span>
+              </md-checkbox>
+            </div> 
+   <div flex="100">
+      <h2 class="md-title">Selected Answers </h2>
+      <code style="display: block; padding: 8px;">{{selected_checkbox | json}}</code>
+    </div>
+ <div ng-show ="_SelectAnswer" class="alert alert-danger">Please select an answer.</div>
+
+
+    <md-button class="md-raised md-primary" ng-click="toggle_selected_questions_http($index, questions,$index+1)"" ng-disabled='userForm_Announcements.$invalid' ><i class="fa fa-floppy-o" aria-hidden="true"></i> Publish </md-button>
+    <md-button class="md-raised md-primary" ng-click="toggle_selected_questions($index, questions,$index+1)"" ng-disabled='userForm_Announcements.$invalid' ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Add Question </md-button>
+
+    </form>
+
+
+    </div>
+</div>
+
+
+  <!--      _Share_files -->
+      <div ng-show="_Share_files_show">
+    <h3>Share Files</h3>
+ 
+
+<!-- test         flow-files-submitted="$flow.upload()" --> 
+<div flow-init=""  class="ng-scope"  flow-files-submitted="testfile($flow.files)">
+  <div class="drop" flow-drop="" ng-class="dropClass">
+    <span class="btn btn-default" flow-btn="">Upload File<input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
+    <span class="btn btn-default" flow-btn="" flow-directory="" ng-show="$flow.supportDirectory">Upload Folder<input type="file" multiple="multiple" webkitdirectory="webkitdirectory" style="visibility: hidden; position: absolute;"></span>
+    <b>OR</b>
+    Drag And Drop your file here
+  </div>
+
+  <br>
+
+  <div class="well">
+    <a class="btn btn-small btn-success" style="color:white;" ng-click="$flow.resume()">Resume all</a>
+    <a class="btn btn-small btn-danger" style="color:white;" ng-click="$flow.pause()">Pause all</a>
+    <a class="btn btn-small btn-info" style="color:white;" ng-click="$flow.cancel()">Cancel all</a>
+    <span class="label label-info ng-binding">Total Size: {{$file.flowTotalSize}}bytes</span>
+  </div>
+<input type="button" value="Click Me" ng-click="testfile($flow.files)">
+  <div>
+
+    <div ng-repeat="file in $flow.files" class="transfer-box ng-scope ng-binding">
+      {{file.name}} ({{file.size}}bytes)
+      <!--  <a  ng-clcik="testfile($file)">adsadsad</a > -->
+      <div class="progress progress-striped" ng-class="{active: file.isUploading()}">
+        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" ng-style="{width: (file.progress() * 100) + '%'}" style="width: 100%;">
+          <span class="sr-only ng-binding">1% Complete</span>
+        </div>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-xs btn-warning ng-hide" style="color:white;" ng-click="file.pause()" ng-show="!file.paused &amp;&amp; file.isUploading()">
+          Pause
+        </a>
+        <a class="btn btn-xs btn-warning ng-hide" style="color:white;" ng-click="file.resume()" ng-show="file.paused">
+          Resume
+        </a>
+        <a class="btn btn-xs btn-danger" style="color:white;" ng-click="file.cancel()">
+          Cancel
+        </a>
+        <a class="btn btn-xs btn-info ng-hide" style="color:white;" ng-click="file.retry()" ng-show="file.error">
+          Retry
+        </a>
+
+      </div>
+    </div>
+      <table>
+ 
+  </table>
+  </div>
+</div>
+
+    </div>
+ <!--       _Announcements_show -->
+    <div ng-show="_Announcements_show">
+    <h3>Create Announcement for {{itemForAnnouncement.productName}}</h3>
+  <form name="userForm_Announcements">
+     <md-input-container class="md-block">
+        <label>Title</label>
+        <input md-maxlength="50" maxlength="50" minlength="5" required md-no-asterisk name="description" ng-model="Announcements_title">
+        <div ng-messages="userForm_Announcements.description.$error">
+          <div ng-message="required">This is required.</div>
+          <div ng-message="md-maxlength">The description must be less than 50 characters long.</div>
+             <div ng-message-exp="['minlength']">
+          Description must be at least 5 characters long</div>
+          <div ng-message-exp="['maxlength']">
+          The description must be less than 50 characters long.</div>
+        </div>
+      </md-input-container>
+<div id="{{ 'object-' + 'quiz' }}"  style="height:250px"  ng-model="Announcements_body" >
+
+
+</div>
+
+          <div ng-show ="checkBodyAnnouncements" class="alert alert-danger">your body cannot be blank.</div>
+    <md-button class="md-raised md-primary" ng-click="SaveAnnouncement()" ng-disabled='userForm_Announcements.$invalid' ><i class="fa fa-floppy-o" aria-hidden="true"></i> Publish </md-button></form>
+
+
+<!-- test         flow-files-submitted="$flow.upload()" --> 
+<!-- <div flow-init=""  class="ng-scope"  flow-files-submitted="testfile($flow.files)">
+  <div class="drop" flow-drop="" ng-class="dropClass">
+    <span class="btn btn-default" flow-btn="">Upload File<input type="file" multiple="multiple" style="visibility: hidden; position: absolute;"></span>
+    <span class="btn btn-default" flow-btn="" flow-directory="" ng-show="$flow.supportDirectory">Upload Folder<input type="file" multiple="multiple" webkitdirectory="webkitdirectory" style="visibility: hidden; position: absolute;"></span>
+    <b>OR</b>
+    Drag And Drop your file here
+  </div>
+
+  <br>
+
+  <div class="well">
+    <a class="btn btn-small btn-success" style="color:white;" ng-click="$flow.resume()">Resume all</a>
+    <a class="btn btn-small btn-danger" style="color:white;" ng-click="$flow.pause()">Pause all</a>
+    <a class="btn btn-small btn-info" style="color:white;" ng-click="$flow.cancel()">Cancel all</a>
+    <span class="label label-info ng-binding">Total Size: {{$file.flowTotalSize}}bytes</span>
+  </div>
+<input type="button" value="Click Me" ng-click="testfile($flow.files)">
+  <div>
+
+    <div ng-repeat="file in $flow.files" class="transfer-box ng-scope ng-binding">
+      {{file.name}} ({{file.size}}bytes)
+      <div class="progress progress-striped" ng-class="{active: file.isUploading()}">
+        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" ng-style="{width: (file.progress() * 100) + '%'}" style="width: 100%;">
+          <span class="sr-only ng-binding">1% Complete</span>
+        </div>
+      </div>
+      <div class="btn-group">
+        <a class="btn btn-xs btn-warning ng-hide" style="color:white;" ng-click="file.pause()" ng-show="!file.paused &amp;&amp; file.isUploading()">
+          Pause
+        </a>
+        <a class="btn btn-xs btn-warning ng-hide" style="color:white;" ng-click="file.resume()" ng-show="file.paused">
+          Resume
+        </a>
+        <a class="btn btn-xs btn-danger" style="color:white;" ng-click="file.cancel()">
+          Cancel
+        </a>
+        <a class="btn btn-xs btn-info ng-hide" style="color:white;" ng-click="file.retry()" ng-show="file.error">
+          Retry
+        </a>
+
+      </div>
+    </div>
+      <table>
+ 
+  </table>
+  </div>
+</div> -->
+  </div>
+<!-- 
+  graphs -->
+  <div ng-show="_graph_show">
+<center>
+  
+ <div fusioncharts
+      width="600"
+      height="400"
+     type="column2d"
+      dataSource="{{myDataSource}}" >
+ </div>
+<fusioncharts 
+    width="600" 
+    height="400"
+    type="pie3d"
+    datasource="{{myDataSource2}}"
+></fusioncharts></center>
+<a ng-click="testhttp()" >asdasdsadsa</a>
+   </div> 
+ <!--  <md-content>
+    <md-tabs md-dynamic-height md-border-bottom>
+    <span ng-repeat="questions in selected_questions track by $index" >
+      <md-tab label={{questions.questionNo}}  >
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Question {{questions.questionNo}}</h1>
+          <h3>Qustion</h3>
+          <div ng-bind-html="thisCanBeusedInsideNgBindHtml(questions.qustion)"></div>
+ <div fusioncharts
+      width="600"
+      height="400"
+     type="column2d"
+      dataSource="{{myDataSource}}" >
+ </div>
+<fusioncharts 
+    width="600" 
+    height="400"
+    type="pie3d"
+    datasource="{{myDataSource2}}"
+></fusioncharts>
+
+
+             </md-content>
+      </md-tab>
+      </span>
+   
+   
+    </md-tabs>
+  </md-content> -->
+
+<!-- 
+  graphs -->
+<!--  id="SaveAnnouncements"  ng-if="checkBodyAnnouncements()" -->
+       <div  >        
+   <pagination page="currentPage" max-size="noOfPages" total-items="totalItems" items-per-page="entryLimit"></pagination>
+</div> 
+
+
+
+<div ng-cloak  ng-show="_quiz_show_answers" style="border: 2px dashed red;" >
+<div ng-cloak  ng-show="_quiz_show_answers_ongoing" ><h3> Ongoing quiz for {{show_ongoing}}</h3>
+</div>
+<h3>Preview</h3>
+  <md-content>
+    <md-tabs md-dynamic-height md-border-bottom>
+    <span ng-repeat="questions in selected_questions track by $index" >
+      <md-tab label={{questions.questionNo}}  >
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Question {{questions.questionNo}}</h1>
+          <h3>Qustion</h3>
+          <div ng-bind-html="thisCanBeusedInsideNgBindHtml(questions.qustion)"></div>
+<h3>Answers</h3>
+<p>1) {{questions.answers.answer_1}}</p></br>
+<p>2) {{questions.answers.answer_2}}</p></br>
+<p>3) {{questions.answers.answer_3}}</p></br>
+<p>4) {{questions.answers.answer_4}}</p></br>
+
+
+
+ <center><md-button class="md-raised md-primary" ng-click="getResults(questions)"  ><i class="fa fa-newspaper-o" aria-hidden="true"></i>  Get Results </md-button>
+ </center>
+             </md-content>
+      </md-tab>
+      </span>
+   
+   
+    </md-tabs>
+  </md-content>
+</div>
+<!--    
+      <md-card flex="100" md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline" >zxzx{{item.name}}</span>
+            <span class="md-subhead" style="color:#337ab7;" > Subject : SEP</span>
+            <span class="md-subhead" style="color:#337ab7;" >Lectu </span>
+            <span class="md-subhead" style="color:#337ab7;" >2h</span>
+          </md-card-title-text>
+          <md-card-title-media>
+            <div class="md-media-lg card-media"><img src="https://www.asme.org/getmedia/c2c8ea5a-b690-4ba7-92bb-34bd1432862b/book_guide_hero_books.aspx"></div>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+        <form >
+          <md-button >
+         <input type="number" min="1" max="250"  ng-model="valueitem.selected[$index]"   ng-init="valueitem.selected[$index]=1" step="1"/>    
+   <input type="text" size="30px;" value="No of students ={{ valueitem.selected[$index]}}" disabled /></md-button><br/><br/>
+  
+        <span ng-if="userLogedIn == true"> <center> <md-button class="md-raised md-primary" ng-click="addToCart(item,valueitem.selected[$index])">Add To List</md-button></center></span>
+        <span ng-if="userLogedIn == false"> <center><a href="#!/login"> <md-button class="md-raised md-primary" >Add To List</md-button></a></center></span>
+          </form>
+        </md-card-actions>
+      </md-card>
+      </div>
+ -->
+
+
+
+<!-- delete -->
+  <div flex-xs flex-gt-xs="36" style="float:left;width:500px;" ng-repeat="item in filtered = productList | filter: search | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit as Result "  >
+    <!-- check added-->
+    <span ng-if="!checkWhetherAddedToTheCart(item);"> 
+      <md-card flex="100" md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline" >{{item.name}}</span>
+            <span class="md-subhead" style="color:#337ab7;" > Ca {{item.category}}</span>
+            <span class="md-subhead" style="color:#337ab7;" >Lar {{item.description}}</span><!-- 
+            <span class="md-subhead" style="color:#337ab7;" >1 Unit = Rs.{{item.unitSellingPrice}}.00</span> -->
+          </md-card-title-text>
+         <md-card-title-media>
+            <div class="md-media-lg card-media"><img src="https://www.asme.org/getmedia/c2c8ea5a-b690-4ba7-92bb-34bd1432862b/book_guide_hero_books.aspx"></div>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+        <form >
+     <!--      <md-button >
+         <input type="number" min="1" max="250"  ng-model="valueitem.selected[$index]"   ng-init="valueitem.selected[$index]=1" step="1"/>    
+    <input type="text" size="30px;" value="{{valueitem.selected[$index]}} Unit = Rs.{{item.unitSellingPrice*valueitem.selected[$index]}}.00" disabled /></md-button><br/><br/> -->
+  <!--   <input type="range" min="0" max="50" value="{{value}}" ng-model="value" /> -->   
+  <center>
+        <span ng-if="userLogedIn == true"> <center> <md-button class="md-raised md-primary" ng-click="addToCart(item,valueitem.selected[$index])">Add To List</md-button></center></span>
+        <span ng-if="userLogedIn == false"> <center><a href="#!/login"> <md-button class="md-raised md-primary" >Add To List</md-button></a></center></span>
+          </center >
+          </form>
+        </md-card-actions>
+      </md-card>
+</span>
+<!-- already added-->
+ <span ng-if="checkWhetherAddedToTheCart(item);"> 
+      <md-card  flex="100" style="   
+    box-shadow:0px 0px 0px 3px #1b5776 inset;" md-theme="{{ showDarkTheme ? 'dark-orange' : 'default' }}" md-theme-watch ng-init="x=getAddedItem(item);" >
+    <!--   <md-card-header style="background-color:#54a054;color:white;height: 40px;" >
+          <md-card-avatar style="color:white;">
+            <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+          </md-card-avatar>
+          <md-card-header-text>
+            <span class="md-title">Already Added To the Cart</span>
+            
+          </md-card-header-text>
+        </md-card-header> -->
+
+        <md-card-title>
+          <md-card-title-text>
+            <!-- <span class="md-subhead" ><i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i> Already Added To the Cart</span> -->
+            <span class="md-headline" >{{x.productName}}</span>
+            <span class="md-subhead" style="color:#337ab7;" > Category {{x.productCatergory}}</span>
+            <span class="md-subhead" style="color:#337ab7;" >Large {{x.productDescription}}</span><!-- 
+            <span class="md-subhead" style="color:#337ab7;" >1 Unit = Rs.{{x.unitCostPrice}}.00</span> -->
+          </md-card-title-text>
+             <md-card-title-media>
+            <div class="md-media-lg card-media"><img src="https://www.asme.org/getmedia/c2c8ea5a-b690-4ba7-92bb-34bd1432862b/book_guide_hero_books.aspx"></div>
+          </md-card-title-media>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center">
+        <form >
+      <!--     <md-button >
+         <input type="number" min="1" max="250"  ng-model="valueitem.selected[$index]"   ng-init="valueitem.selected[$index]=x.productQuantity" step="1"/>    
+    <input type="text" size="30px;" value="{{valueitem.selected[$index]}} Unit = Rs.{{x.unitCostPrice*valueitem.selected[$index]}}.00" disabled /></md-button><br/><br/> -->
+  <!--   <input type="range" min="0" max="50" value="{{value}}" ng-model="value" /> -->   
+         <center> <!-- <md-button class="md-raised md-primary" ng-click="editCart(x,valueitem.selected[$index])">Edit List</md-button> -->
+         <md-button class="md-raised md-primary" ng-click="removefromCart(x,valueitem.selected[$index])">Remove From List</md-button></center>
+          </form>
+        </md-card-actions>
+      </md-card>
+</span>
+      </div>
+   <div ng-if= "Result.length == 0" >
+     <div class="row" >
+                    <div class="col-lg-12"   >
+                        <div class="alert alert-info alert-dismissable" style="background-color:#F44336;opacity:0.8;color:white;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i> Sorry, your search  <strong>'{{search}}'</strong> did not match any products. 
+                        </div>
+                    </div>
+                </div>
+   </div>
+      <!--one repeat-->
+     
+</div>
+
+<div  > 
+
+   <pagination page="currentPage" max-size="noOfPages" total-items="totalItems" items-per-page="entryLimit"></pagination>
+</div>
+
+
+    
+
+   
+                 
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+
+    <!-- /#wrapper -->
+
+  </div>
+
